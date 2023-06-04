@@ -87,6 +87,14 @@
     </section>
   </main>
 
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+  window.TrackJS && TrackJS.install({ 
+    token: "c0f47de158c74309bfba0d54fa7c106f"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+</script>
+
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -102,6 +110,104 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    document.querySelector('#error-btns > button:nth-child(1)').addEventListener('click', () => {
+      console.log('this is Log');
+    });
+    document.querySelector('#error-btns > button:nth-child(2)').addEventListener('click', () => {
+
+      try{
+        console.error('this is Error');
+        throw new Error();
+      }
+      catch(err){
+        console.log("error caught");
+      }
+      finally{
+        console.log("activated both try and catch");
+      }
+    });
+    document.querySelector('#error-btns > button:nth-child(3)').addEventListener('click', () => {
+      console.count('this is Count');
+    });
+    document.querySelector('#error-btns > button:nth-child(4)').addEventListener('click', () => {
+      console.warn('this is Warn');
+    });
+    document.querySelector('#error-btns > button:nth-child(5)').addEventListener('click', () => {
+      const x = false;
+      console.assert(x, "this is Assert");
+    });
+    class ClearError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = 'ClearError';
+      }
+    }
+
+    document.querySelector('#error-btns > button:nth-child(6)').addEventListener('click', () => {
+      try {
+        console.clear();
+      } 
+      catch (error) {
+        if (error instanceof ClearError) {
+          console.log('Custom error occurred:', error.message);
+        } else {
+          console.error('An error occurred:', error);
+        }
+      }
+    });
+    document.querySelector('#error-btns > button:nth-child(7)').addEventListener('click', () => {
+      console.dir(errorBtns);
+    });
+    document.querySelector('#error-btns > button:nth-child(8)').addEventListener('click', () => {
+      console.dirxml(document.querySelector('#error-btns > button:nth-child(1)'));
+    });
+    document.querySelector('#error-btns > button:nth-child(9)').addEventListener('click', () => {
+      console.group();
+      console.log("group started");
+    });
+    document.querySelector('#error-btns > button:nth-child(10)').addEventListener('click', () => {
+      console.groupEnd();
+      console.log("group ended");
+    });
+    document.querySelector('#error-btns > button:nth-child(11)').addEventListener('click', () => {
+      function golfBrands(name, best) {
+        this.name = name;
+        this.best = best;
+      }
+
+      const titleist = new golfBrands("titleist", "balls");
+      const ping = new golfBrands("ping", "driver");
+      const cleveland = new golfBrands("cleveland", "wedges");
+
+      console.table([titleist, ping, cleveland]);
+    });
+    document.querySelector('#error-btns > button:nth-child(12)').addEventListener('click', () => {
+      console.time();
+      console.log("timer started")
+    });
+    document.querySelector('#error-btns > button:nth-child(13)').addEventListener('click', () => {
+      console.timeEnd();
+      console.log("timer ended")
+    });
+    document.querySelector('#error-btns > button:nth-child(14)').addEventListener('click', () => {
+      first();
+
+      function first(){
+      second();
+      }
+      function second(){
+        third();
+      }
+      function third(){
+        console.trace();
+      }
+    });
+    document.querySelector('#error-btns > button:nth-child(15)').addEventListener('click', () => {
+      throw new Error('This is global error');
+      throw new Error('OH NO ANOTHER ERROR');
+    });
+
   </script>
 </body>
 
